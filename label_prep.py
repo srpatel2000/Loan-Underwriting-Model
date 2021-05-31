@@ -1,6 +1,5 @@
 from pyspark.sql import functions as F
 
-# ADD LABELS ------------------------------------------------------------------------------
 df = spark.read.option("header", False).option("delimiter", "|").csv("s3://ds102-mintchoco-scratch/data/historical_data_2009Q1/historical_data_time_2009Q1.txt")
 # df.show()
 # df.describe().show() # shows descriptors for columns in df
@@ -8,6 +7,7 @@ df = spark.read.option("header", False).option("delimiter", "|").csv("s3://ds102
 filtered_df = df.select("_c0", "_c3", "_c8") # important subset of columns
 # filtered_df.show()
 
+# ADD LABELS ------------------------------------------------------------------------------
 filtered_df = filtered_df.withColumn(
     "label",
     F.when((F.col("_c3") >= 90) | 
