@@ -23,7 +23,7 @@ merged_df = pd.merge(features, labels, on='loan_sequence_number', how="inner")
 
 # create training a test split
 X = merged_df[merged_df.columns.difference(['loan_sequence_number', 'label'])]
-y = merged_df[['label']]
+y = merged_df['label']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30)
 
 # fit the model
