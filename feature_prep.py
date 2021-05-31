@@ -2,8 +2,7 @@
 # import statements
 import dask.dataframe as dd
 from distributed import Client
-# from dask_ml import preprocessing
-
+from dask_ml import preprocessing
 
 #client = Client()
 
@@ -71,7 +70,6 @@ from distributed import Client
 def replace_null(data, row, val):
     return data[row].where(data[row] == 'Y', val)
 
-
 def valid_data(data, low, high, row):
     return data[(data[row] <= high) & (data[row] >= low)]
 
@@ -82,7 +80,7 @@ def rename_col(data):
     return data.rename(columns=dict(zip(data.columns, new_columns)))
     
 
-def main(path):
+def clean_features(path):
     client = Client()
     og_data_df = dd.read_csv(path, sep="|", header=None, dtype={25:str, 27: object})
     # monthly_perf_data_df = dd.read_csv("historical_data_time_2009Q1.txt", sep="|", header=None, dtype={24: 'object', 28: 'object',29: 'object',3: 'object'})
@@ -116,7 +114,7 @@ def main(path):
 
 
 if __name__ == '__main__':
-    main("historical_data_2009Q1.txt")
+    clean_features("historical_data_2009Q1.txt")
 
 
 # Label Encoder
