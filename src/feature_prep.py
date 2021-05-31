@@ -4,6 +4,7 @@ from distributed import Client
 from dask_ml import preprocessing
 import dask.array as da
 import numpy as np
+import sys
 
 #client = Client()
 
@@ -125,13 +126,12 @@ def clean_features(path):
     print('final')
     print('\n', cleaned_df.head())
 
-
-    #result.to_parquet()
-
+    return cleaned_df
 
 if __name__ == '__main__':
     client = Client()
-    clean_features("historical_data_2009Q1.txt")
+    features_df = clean_features(sys.argv[1])
+    features_df.write.format("parquet").mode("overwrite").save(sys.argv[2])
 
 
 # Label Encoder
