@@ -20,3 +20,6 @@ pip install dask[complete] --no-cache-dir # install dask
 aws s3 cp s3://ds102-mintchoco-scratch/data/historical_data_2009Q1/historical_data_2009Q1.txt ~/ # copy the file you want to read temporarily into your local EC2 instance
 # python # activate python
 
+# add feature_prep.py file to s3 bucket
+aws s3 cp s3://ds102-mintchoco-scratch/feature_prep.py ~/
+pip install dask-ml
