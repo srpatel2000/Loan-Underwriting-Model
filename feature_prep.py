@@ -81,7 +81,6 @@ def rename_col(data):
     
 
 def clean_features(path):
-    client = Client()
     og_data_df = dd.read_csv(path, sep="|", header=None, dtype={25:str, 27: object})
     # monthly_perf_data_df = dd.read_csv("historical_data_time_2009Q1.txt", sep="|", header=None, dtype={24: 'object', 28: 'object',29: 'object',3: 'object'})
     og_data_df = rename_col(og_data_df)
@@ -114,6 +113,7 @@ def clean_features(path):
 
 
 if __name__ == '__main__':
+    client = Client()
     clean_features("historical_data_2009Q1.txt")
 
 
