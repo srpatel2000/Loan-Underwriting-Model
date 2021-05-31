@@ -1,8 +1,9 @@
-
 # import statements
 import dask.dataframe as dd
 from distributed import Client
 from dask_ml import preprocessing
+import dask.array as da
+import numpy as np
 
 #client = Client()
 
@@ -67,18 +68,22 @@ from dask_ml import preprocessing
 #cleaned_df['4'] = cleaned_df['4'].where(cleaned_df['4'] > 0, 0) # indicates that mortgage property is not in MSA
 #cleaned_df['4'] = cleaned_df['4'].where(cleaned_df['4'] == 0, 1) # indicates that mortgage property is in MSA
 
-def replace_null(data, row, val):
-    return data[row].where(data[row] == 'Y', val)
+def replace_null(data, col, val):
+    return data[col].where(data[col] == 'Y', val)
 
-def valid_data(data, low, high, row):
-    return data[(data[row] <= high) & (data[row] >= low)]
+def valid_data(data, low, high, col):
+    return data[(data[col] <= high) & (data[col] >= low)]
 
 def rename_col(data):
     new_columns = []
     for col in data.columns:
         new_columns.append(str(col))
     return data.rename(columns=dict(zip(data.columns, new_columns)))
-    
+
+def encoding(data, col):
+    le = preprocessing.LabelEncoder()
+    return dd.from_dask_array(le.fit_transform(data[col]), index=data.index)
+
 
 def clean_features(path):
     og_data_df = dd.read_csv(path, sep="|", header=None, dtype={25:str, 27: object})
@@ -86,6 +91,7 @@ def clean_features(path):
     og_data_df = rename_col(og_data_df)
 
     #### PREPROCESSING ####
+
     # CLEANING ORIGINATION DATA FILE --------------------------------------------------------------------------------------
 
     # filter relevant column
@@ -108,6 +114,17 @@ def clean_features(path):
 
     print(cleaned_df.head())
 
+    # LABEL ENCODING CATEGORICAL VARIABLES --------------------------------------------------------------------------------------
+
+    cleaned_df['7'] = encoding(cleaned_df, '7')
+    cleaned_df['14'] = encoding(cleaned_df, '14')
+    cleaned_df['17'] = encoding(cleaned_df, '17')
+    cleaned_df['25'] = encoding(cleaned_df, '25')
+    cleaned_df['28'] = encoding(cleaned_df, '28')
+
+    print('final')
+    print('\n', cleaned_df.head())
+
 
     #result.to_parquet()
 
@@ -125,3 +142,14 @@ if __name__ == '__main__':
 # encoder = preprocessing.LabelEncoder() --> for OneHotEncoding preprocessing.OneHotEncoder(sparse=False)
 # encoder.fit(cat_df)
 # encoder.transform(cat_df).compute()
+# data = dd.from_pandas(pd.Series(['a', 'a', 'b'], dtype='category'), npartitions=2)
+
+# le = preprocessing.LabelEncoder()
+# enc = preprocessing.OneHotEncoder()
+
+
+# cat_7 = dd.from_dask_array(le.fit_transform(cleaned_df['7']), index=cleaned_df.index)
+
+# cat columns: 7, 14, 17, 25, 28
+
+# check if removing values from 8/11 cltv (999)
