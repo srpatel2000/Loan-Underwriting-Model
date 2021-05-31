@@ -1,7 +1,7 @@
 # HOW TO SSH INTO EC2 INSTANCE ----------------------------------------------------------------------------------------------------
 #cd dsc_102 # [OPTIONAL] # change directories to the folder that has the pem file on siddhi's laptop
 #chmod 400 featureprep_ec2.pem # change permissions in this file to be correct
-#ssh -i featureprep_ec2.pem ubuntu@ec2-18-237-212-25.us-west-2.compute.amazonaws.com -L 8001:localhost:8787 # ssh into EC2 instance
+#ssh -i featureprep_ec2.pem ubuntu@ec2-34-222-214-216.us-west-2.compute.amazonaws.com -L 8001:localhost:8787 # ssh into EC2 instance
 
 # WHAT TO DO ONCE IN THE EC2 INSTANCE ---------------------------------------------------------------------------------------------
 sudo apt-get update # update your repositories
