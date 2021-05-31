@@ -39,5 +39,5 @@ def label(path):
 if __name__ == '__main__':
     spark = SparkSession.builder.getOrCreate()
     label_dfs = label(sys.argv[1])
-    label_dfs.write.format("parquet").mode("overwrite").save("s3://ds102-mintchoco-scratch/labels/labels.parquet")
+    label_dfs.write.format("parquet").mode("overwrite").save(sys.argv[2])
     spark.stop()
