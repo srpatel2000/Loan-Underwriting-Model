@@ -1,5 +1,4 @@
 from pyspark.sql import SparkSession
-from pyspark import SparkContext, SparkConf
 from pyspark.sql import functions as F
 import sys
 
@@ -38,7 +37,7 @@ def label(path):
     return labeled_df
 
 if __name__ == '__main__':
-    spark = SparkSession.builder.appName("label_prep").master("local").getOrCreate()
-    print(str(sys.argv))
-    label_dfs = label("s3://ds102-mintchoco-scratch/data/historical_data_2009Q1/historical_data_time_2009Q1.txt")
+    spark = SparkSession.builder.getOrCreate()
+    label_dfs = label(sys.argv[1])
     label_dfs.write.format("parquet").mode("overwrite").save("s3://ds102-mintchoco-scratch/labels/labels.parquet")
+    spark.stop()
