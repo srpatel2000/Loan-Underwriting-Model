@@ -17,7 +17,18 @@ filtered_df = filtered_df.withColumn(
 )
 # filtered_df.show()
 
-labels_df = df.select("_c0", "label")
+labels_df = filtered_df.select("_c0", "label")
 # labels_df.show()
 
 # CALCULATE PREDICTED PROBABILITY OF DEFAULT ----------------------------------------------
+avg_df = labels_df.groupby("_c0").agg({'label': 'mean'})
+
+# ADD LABELS BASED ON PROBABILITY ---------------------------------------------------------
+labeled_df = avg_df.withColumn(
+    "label",
+    F.when((F.col("avg(label)") >= 0.5), 1).otherwise(0)
+)
+
+# SAVE DF INTO PARQUET TABLE --------------------------------------------------------------
+labeled_df = labeled_df.select("_c0", "label")
+labeled_df.write.format("parquet").mode("overwrite").save("s3://ds102-mintchoco-scratch/labels/labels.parquet")
