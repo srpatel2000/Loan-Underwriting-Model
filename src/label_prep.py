@@ -2,7 +2,8 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 import sys
 
-# ASK HOW TO GET DYNAMIC PATH VALUES
+# IS THIS THE CORRECT WAY OF READING IN DYNAMIC FILES? --> include readme on how to run scripts
+# spark-submit --deploy-mode cluster s3://ds102-mintchoco-scratch/label_prep.py
 
 def label(path):
 
@@ -16,7 +17,12 @@ def label(path):
     # ADD LABELS ------------------------------------------------------------------------------
     filtered_df = filtered_df.withColumn(
         "label",
-        F.when((F.col("delinquency_status") == "3") | 
+        F.when((F.col("delinquency_status") != "XX" | 
+        F.col("delinquency_status") != "0" |
+        F.col("delinquency_status") != "1" |
+        F.col("delinquency_status") != "2" |
+        F.col("delinquency_status") != "R" |
+        F.col("delinquency_status") != " " ) |
         ((F.col("zero_balance_code") == "03") | 
         (F.col("zero_balance_code") == "06") | 
         (F.col("zero_balance_code") == "09")), 1).otherwise(0)
