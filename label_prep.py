@@ -1,29 +1,28 @@
 from pyspark.sql import functions as F
 
-def label_prep(path):
+# ASK HOW TO PROPERLY SCALE THIS AT OFFICE HOURS
 
+def label(path):
+
+    """ This function generates labels from the Delinquency Status and Zero Balance Code of a Specific Loan Sequence Number.
+        The label indicates whether a user is considered default or not (1=yes, 0=no). """
+
+    # READ IN DATA ----------------------------------------------------------------------------
     df = spark.read.option("header", False).option("delimiter", "|").csv(path)
-    # df.show()
-    # df.describe().show() # shows descriptors for columns in df
-
-    filtered_df = df.select("_c0", "_c3", "_c8") # important subset of columns
-    # filtered_df.show()
+    filtered_df = df.select(F.col("_c0").alias("loan_sequence_number"), F.col("_c3").alias("delinquency_status"), F.col("_c8").alias("zero_balance_code")) # important subset of columns
 
     # ADD LABELS ------------------------------------------------------------------------------
     filtered_df = filtered_df.withColumn(
         "label",
-        F.when((F.col("_c3") >= 90) | 
-        (F.col("_c8") == "03") | 
-        (F.col("_c8") == "06") | 
-        (F.col("_c8") == "09"), 1).otherwise(0)
+        F.when((F.col("delinquency_status") == "3") | 
+        (F.col("zero_balance_code") == "03") | 
+        (F.col("zero_balance_code") == "06") | 
+        (F.col("zero_balance_code") == "09"), 1).otherwise(0)
     )
-    # filtered_df.show()
-
-    labels_df = filtered_df.select("_c0", "label")
-    # labels_df.show()
+    labels_df = filtered_df.select("loan_sequence_number", "label")
 
     # CALCULATE PREDICTED PROBABILITY OF DEFAULT ----------------------------------------------
-    avg_df = labels_df.groupby("_c0").agg({'label': 'mean'})
+    avg_df = labels_df.groupby("loan_sequence_number").agg({'label': 'mean'})
 
     # ADD LABELS BASED ON PROBABILITY ---------------------------------------------------------
     labeled_df = avg_df.withColumn(
@@ -32,6 +31,10 @@ def label_prep(path):
     )
 
     # SAVE DF INTO PARQUET TABLE --------------------------------------------------------------
-    labeled_df = labeled_df.select("_c0", "label")
-    print(labeled_df)
+    labeled_df = labeled_df.select("loan_sequence_number", "label")
     labeled_df.write.format("parquet").mode("overwrite").save("s3://ds102-mintchoco-scratch/labels/labels.parquet")
+
+if __name__ == '__main__':
+    label("s3://ds102-mintchoco-scratch/data/historical_data_2009Q1/historical_data_time_2009Q1.txt")
+
+# PYTHONSTARTUP=label_prep.py pyspark
