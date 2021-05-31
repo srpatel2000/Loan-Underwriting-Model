@@ -2,6 +2,8 @@
 # import statements
 import dask.dataframe as dd
 from distributed import Client
+# from dask_ml import preprocessing
+
 
 #client = Client()
 
@@ -80,9 +82,9 @@ def rename_col(data):
     return data.rename(columns=dict(zip(data.columns, new_columns)))
     
 
-def main():
+def main(path):
     client = Client()
-    og_data_df = dd.read_csv("historical_data_2009Q1.txt", sep="|", header=None, dtype={25:str, 27: object})
+    og_data_df = dd.read_csv(path, sep="|", header=None, dtype={25:str, 27: object})
     # monthly_perf_data_df = dd.read_csv("historical_data_time_2009Q1.txt", sep="|", header=None, dtype={24: 'object', 28: 'object',29: 'object',3: 'object'})
     og_data_df = rename_col(og_data_df)
 
@@ -114,4 +116,14 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main("historical_data_2009Q1.txt")
+
+
+# Label Encoder
+# from dask_ml import preprocessing
+# cat_df = cleaned_df.astype('category')
+# cat_df = cat_df.categorize()
+
+# encoder = preprocessing.LabelEncoder() --> for OneHotEncoding preprocessing.OneHotEncoder(sparse=False)
+# encoder.fit(cat_df)
+# encoder.transform(cat_df).compute()
