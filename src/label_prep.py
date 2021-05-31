@@ -1,7 +1,9 @@
 from pyspark.sql import SparkSession
+from pyspark import SparkContext, SparkConf
 from pyspark.sql import functions as F
+import sys
 
-# ASK HOW TO PROPERLY SCALE THIS AT OFFICE HOURS
+# ASK HOW TO GET DYNAMIC PATH VALUES
 
 def label(path):
 
@@ -31,13 +33,12 @@ def label(path):
     F.when((F.col("avg(label)") >= 0.5), 1).otherwise(0)
     )
 
-    # SAVE DF INTO PARQUET TABLE --------------------------------------------------------------
+    # SELECT RELEVANT COLUMNS -----------------------------------------------------------------
     labeled_df = labeled_df.select("loan_sequence_number", "label")
-    print(labeled_df.show())
-    labeled_df.write.format("parquet").mode("overwrite").save("s3://ds102-mintchoco-scratch/labels/labels.parquet")
+    return labeled_df
 
 if __name__ == '__main__':
-    spark = SparkSession.builder.getOrCreate()
-    label("s3://ds102-mintchoco-scratch/data/historical_data_2009Q1/historical_data_time_2009Q1.txt")
-
-# PYTHONSTARTUP=label_prep.py pyspark
+    spark = SparkSession.builder.appName("label_prep").master("local").getOrCreate()
+    print(str(sys.argv))
+    label_dfs = label("s3://ds102-mintchoco-scratch/data/historical_data_2009Q1/historical_data_time_2009Q1.txt")
+    label_dfs.write.format("parquet").mode("overwrite").save("s3://ds102-mintchoco-scratch/labels/labels.parquet")
