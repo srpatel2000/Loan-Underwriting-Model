@@ -84,4 +84,8 @@ We used a simple Logistic Regression model in order to determine the likelihood 
       * Accuracy: ~99%
    
 If given more time, we'd try to get a proper accuracy reading by balancing the dataset better and taking in different features in the process. 
+  
+  
+## Workflow Diagram
+https://github.com/srpatel2000/DSC102-PA/blob/main/parallelization_diagram.png
 
