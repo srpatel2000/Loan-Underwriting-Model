@@ -22,7 +22,7 @@ This project was created for the SP'21 Iteration of DSC-102: Scalable Analytic a
 
 ## Feature Engineering and Preprocessing
 
-To preprocess the data, we began by filtering the Origination dataset with the following relevent columns.
+To preprocess the data, we began by filtering the Origination dataset into the following relevant columns.
 * Credit Score
 * Metropolitan Statistical Area
 * Number of Units
@@ -44,3 +44,15 @@ In regards to cleaning our data, we chose to drop invalid inputs for credit scor
 ## Label Preparation
    
 In order to attain the labels, we looked at the Monthly Performance dataset and defined a loan-taker as default at 90 days or more delinquent. In addition to delinquency status, we used their Zero Balance Code. If this code was listed as "03", "06", or "09", the loan was also be considered a default.
+   
+# ML Model
+   
+We used a simple Logistic Regression model in order to determine the likelihood of default. After running the model with our labels described in the Feature Engineering and Preprocessing section, we got this output: 
+   
+      * Confusion Matrix: 
+               [[185125      2]
+                [   362      1]]
+   
+      * Accuracy: ~99%
+   
+If given more time, we'd try to get a proper accuracy reading by balancing the dataset better and taking in different features in the process. 
