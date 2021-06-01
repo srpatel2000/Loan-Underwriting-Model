@@ -56,3 +56,18 @@ We used a simple Logistic Regression model in order to determine the likelihood 
       * Accuracy: ~99%
    
 If given more time, we'd try to get a proper accuracy reading by balancing the dataset better and taking in different features in the process. 
+   
+## CONFIGURATIONS 
+
+* __EC2 Configurations__:
+   * Amazon Machine Image (AMI): Ubuntu Server 20.04 LTS (HVM), SSD Volume Type - ami-03d5c68bab01f3496 (64-bit x86)
+   * Instance Type: t2.xlarge
+   * Instance Details: Request Spot Instances
+      * added a few cents in avaliability zone
+   * Add Storage 
+      * selected 8 GB
+      * Volume Type: use General Purpose SSD (gp2) 
+      * Left “Delete on Termination” on
+   * Didn't make any changes to add tags or configure security group
+   * After launching, we selected the key paid which we created (feature_prep_ec2.pem)
+
