@@ -57,7 +57,7 @@ We used a simple Logistic Regression model in order to determine the likelihood 
    
 If given more time, we'd try to get a proper accuracy reading by balancing the dataset better and taking in different features in the process. 
    
-## CONFIGURATIONS 
+## Configuration
 
 * __EC2 Configurations__:
    * Amazon Machine Image (AMI): Ubuntu Server 20.04 LTS (HVM), SSD Volume Type - ami-03d5c68bab01f3496 (64-bit x86)
