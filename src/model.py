@@ -35,4 +35,4 @@ y_pred = model.predict(X_test)
 print(confusion_matrix(y_test, y_pred))
 
 # display accuracy 
-print(accuracy_score(y_test, y_pred)
+print(accuracy_score(y_test, y_pred))

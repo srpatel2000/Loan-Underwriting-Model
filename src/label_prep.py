@@ -17,15 +17,19 @@ def label(path):
     # ADD LABELS ------------------------------------------------------------------------------
     filtered_df = filtered_df.withColumn(
         "label",
-        F.when((F.col("delinquency_status") != "XX" | 
-        F.col("delinquency_status") != "0" |
-        F.col("delinquency_status") != "1" |
-        F.col("delinquency_status") != "2" |
-        F.col("delinquency_status") != "R" |
-        F.col("delinquency_status") != " " ) |
-        ((F.col("zero_balance_code") == "03") | 
-        (F.col("zero_balance_code") == "06") | 
-        (F.col("zero_balance_code") == "09")), 1).otherwise(0)
+        F.when(
+        (   
+            (F.col("delinquency_status") != "XX") & 
+            (F.col("delinquency_status") != "0") &
+            (F.col("delinquency_status") != "1") &
+            (F.col("delinquency_status") != "2") &
+            (F.col("delinquency_status") != "R") &
+            (F.col("delinquency_status") != " ")
+        ) | (  
+            (F.col("zero_balance_code") == "03") |
+            (F.col("zero_balance_code") == "06") | 
+            (F.col("zero_balance_code") == "09")
+        ), 1).otherwise(0)
     )
     labels_df = filtered_df.select("loan_sequence_number", "label")
 
@@ -46,4 +50,3 @@ if __name__ == '__main__':
     spark = SparkSession.builder.getOrCreate()
     label_dfs = label(sys.argv[1])
     label_dfs.write.format("parquet").mode("overwrite").save(sys.argv[2])
-    spark.stop()
