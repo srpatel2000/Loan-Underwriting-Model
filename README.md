@@ -22,7 +22,7 @@ This project was created for the SP'21 Iteration of DSC-102: Scalable Analytic a
 
 ## Feature Engineering and Preprocessing
 
-To preprocess the data, we began filtering the Origination dataset to the following relevent columns.
+To preprocess the data, we began by filtering the Origination dataset with the following relevent columns.
 * Credit Score
 * Metropolitan Statistical Area
 * Number of Units
