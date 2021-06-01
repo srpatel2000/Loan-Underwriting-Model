@@ -1,9 +1,7 @@
+# import statements
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 import sys
-
-# IS THIS THE CORRECT WAY OF READING IN DYNAMIC FILES? --> include readme on how to run scripts
-# spark-submit --deploy-mode cluster s3://ds102-mintchoco-scratch/label_prep.py
 
 def label(path):
 
