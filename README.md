@@ -27,7 +27,7 @@ This project was created for the SP'21 Iteration of DSC-102: Scalable Analytic a
    * Security Options
       * Use the key pair made when creating EC2 instance (featureprep_ec2.pem)
 
-Tradeoffs: To handle larger volumes of data, we can upscale the storage in EC2 instance configuration as well as increase the number of workers within the EMR configuration. By increasing the number of workers, we can partition the dataframe and run the label prep among different workers which will reduce the overall runtime. 
+Tradeoffs: To handle larger volumes of data, we can upscale the storage in EC2 instance configuration as well as increase the number of workers within the EMR configuration. By increasing the storage in EC2, we'd be able to handle a larger volumne of data. By increasing the number of workers in the EMR cluster, we can partition a large dataframe and run the label_prep.py among different workers at the same time. This would reduce the overall runtime as opposed to if we were to run a large dataset on only one worker. 
 
 ## How To Run:
 
@@ -69,7 +69,7 @@ In regards to cleaning our data, we chose to drop invalid inputs for credit scor
    
 ## Label Preparation
    
-In order to attain the labels, we looked at the Monthly Performance dataset and defined a loan-taker as default at 90 days or more delinquent. In addition to delinquency status, we used their Zero Balance Code. If this code was listed as "03", "06", or "09", the loan was also be considered a default.
+In order to attain the labels, we looked at the Monthly Performance dataset and defined a loan-taker as default at 90 days or more delinquent. In addition to delinquency status, we used their Zero Balance Code. If this code was listed as "03", "06", or "09", the loan was also be considered a default. We then averaged the amounts of defaults that an individual Loan Sequence Number had. If the average of defaults was greater than 0.5, then we'd categorize that specific Loan Sequence Number to be likely default. If the average was less than 0.5, then the individual would not be likely of default. Although this isn't the most complex model, we believe that this is more fair that basing whether someone would default or not based on one month's performance. 
    
 ## ML Model
    
