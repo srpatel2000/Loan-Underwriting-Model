@@ -27,6 +27,8 @@ This project was created for the SP'21 Iteration of DSC-102: Scalable Analytic a
    * Security Options
       * Use the key pair made when creating EC2 instance (featureprep_ec2.pem)
 
+Tradeoffs: To handle larger volumes of data, we can upscaling the storage in EC2 instance configuration as well as increasing the number of workers within the EMR configuration. By increase the number of workers, we can partition the dataframe and run the label prep among different workers which will reduce the overall runtime. 
+
 ## How To Run:
 
 * __feature_prep.py__: This file was run on EC2 instance. In order to initialize the EC2 instance, you can use: src/emr_initialization.sh file as a guide. Once SSH'd into the instance, you can run this line of code: 
