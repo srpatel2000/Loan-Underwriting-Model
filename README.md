@@ -3,6 +3,30 @@
 ## Project Description
 This project was created for the SP'21 Iteration of DSC-102: Scalable Analytic at UCSD. In this project, we got to learn how to create a basic loan underwriting model using the [Freddie Mac Single Family Loan](http://www.freddiemac.com/research/datasets/sf_loanlevel_dataset.page) dataset. Although we created a machine learning model, the goal of this project was not about model accuracy, but rather to learn how to make scalable models using AWS, Dask, and Pyspark. Due to this, we spent much time learning how to use these softwares/languages, but spent minimal time finding the best features/models. Below, we will describe how to re-run our project in order to run larger datasets. We'll also be discussing how the project was made scalable. 
 
+## Configuration
+
+* __EC2 Configurations__:
+   * Amazon Machine Image (AMI): Ubuntu Server 20.04 LTS (HVM), SSD Volume Type - ami-03d5c68bab01f3496 (64-bit x86)
+   * Instance Type: t2.xlarge
+   * Instance Details: Request Spot Instances
+      * Added a few cents in avaliability zone
+   * Add Storage 
+      * Selected 8 GB
+      * Volume Type: use General Purpose SSD (gp2) 
+      * Left “Delete on Termination” on
+   * Didn't make any changes to "add tags" or "configure security group"
+   * After launching, we selected the key pair which we created (featureprep_ec2.pem)
+
+* __EMR Configurations__:
+   * Software and Steps
+      * Release: emr-6.2.0
+      * Rest was set to default options 
+   * Hardware
+      * Set to 1 Master Node and 2 Core Nodes
+   * General Cluster Setting was left as default
+   * Security Options
+      * Use the key pair made when creating EC2 instance (featureprep_ec2.pem)
+
 ## How To Run:
 
 * __feature_prep.py__: This file was run on EC2 instance. In order to initialize the EC2 instance, you can use: src/emr_initialization.sh file as a guide. Once SSH'd into the instance, you can run this line of code: 
@@ -56,18 +80,4 @@ We used a simple Logistic Regression model in order to determine the likelihood 
       * Accuracy: ~99%
    
 If given more time, we'd try to get a proper accuracy reading by balancing the dataset better and taking in different features in the process. 
-   
-## Configuration
-
-* __EC2 Configurations__:
-   * Amazon Machine Image (AMI): Ubuntu Server 20.04 LTS (HVM), SSD Volume Type - ami-03d5c68bab01f3496 (64-bit x86)
-   * Instance Type: t2.xlarge
-   * Instance Details: Request Spot Instances
-      * added a few cents in avaliability zone
-   * Add Storage 
-      * selected 8 GB
-      * Volume Type: use General Purpose SSD (gp2) 
-      * Left “Delete on Termination” on
-   * Didn't make any changes to add tags or configure security group
-   * After launching, we selected the key paid which we created (feature_prep_ec2.pem)
 
