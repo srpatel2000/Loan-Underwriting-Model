@@ -39,6 +39,8 @@ To preprocess the data, we began filtering the Origination dataset to the follow
 
 We choose the above relevent column based on ["7 Factors That Affect a Loan Application"](https://loans.usnews.com/articles/beyond-credit-scores-factors-that-affect-a-loan-application) as well as advice from loan-takers. 
    
+In regards to cleaning our data, we chose to drop invalid inputs for credit score and debt-to-income ratio since both are highly significant features. For feature engineering, we generated a column called metro_area using Metropolitan Statistical Area column which indicated whether mortage property lies in a metropolitan area {0: not in metropolitan area, 1: in metropolitan area}. We also decided to use label (one-hot) encoder to handle categorical data.
+   
 ## Label Preparation
    
 In order to attain the labels, we looked at the Monthly Performance dataset and defined a loan-taker as default at 90 days or more delinquent. In addition to delinquency status, we used their Zero Balance Code. If this code was listed as "03", "06", or "09", the loan was also be considered a default.
