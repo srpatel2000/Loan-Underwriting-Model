@@ -1,5 +1,7 @@
 # DSC102-PA
 
+____WRITE UP IS WITHIN THIS IMAGE____
+
 ## Project Description
 This project was created for the SP'21 Iteration of DSC-102: Scalable Analytic at UCSD. In this project, we got to learn how to create a basic loan underwriting model using the [Freddie Mac Single Family Loan](http://www.freddiemac.com/research/datasets/sf_loanlevel_dataset.page) dataset. Although we created a machine learning model, the goal of this project was not about model accuracy, but rather to learn how to make scalable models using AWS, Dask, and Pyspark. Due to this, we spent much time learning how to use these softwares/languages, but spent minimal time finding the best features/models. Below, we will describe how to re-run our project in order to run larger datasets. We'll also be discussing how the project was made scalable. 
 
