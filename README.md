@@ -87,5 +87,6 @@ If given more time, we'd try to get a proper accuracy reading by balancing the d
   
   
 ## Workflow Diagram
-https://github.com/srpatel2000/DSC102-PA/blob/main/parallelization_diagram.png
+parallelization_diagram.png![image](https://user-images.githubusercontent.com/49801632/120269670-1aa99300-c25d-11eb-8e47-2109d17d8599.png)
+
 
