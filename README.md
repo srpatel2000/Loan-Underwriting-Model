@@ -5,6 +5,21 @@ This project was created for the SP'21 Iteration of DSC-102: Scalable Analytic a
 
 ## How To Run:
 
+* __feature_prep.py__: This file was run on EC2 instance. In order to initialize the EC2 instance, you can use: src/emr_initialization.sh file as a guide. Once SSH'd into the instance, you can run this line of code: 
+
+    *     python feature_prep.py <INPUT DATA PATH> <OUTPUT FILE PATH>
+  
+  EXAMPLE:
+    *     python feature_prep.py s3://ds102-mintchoco-scratch/data/historical_data_2009Q1/historical_data_2009Q1.txt s3://ds102-mintchoco-scratch/features
+
+
+* __label_prep.py__: This file was run on the master node of an EMR cluster. In order to initialize the EMR cluster, you can use: src/emr_initialization.sh file as a guide. Once SSH'd into the cluster, you can run this line of code: 
+
+    *     spark-submit --deploy-mode cluster s3://ds102-mintchoco-scratch/label_prep.py <INPUT DATA PATH> <OUTPUT FILE PATH>
+  
+  EXAMPLE:
+    *     spark-submit --deploy-mode cluster s3://ds102-mintchoco-scratch/label_prep.py s3://ds102-mintchoco-scratch/data/historical_data_2009Q1/historical_data_time_2009Q1.txt s3://ds102-mintchoco-scratch/labels/labels.parquet/
+
 ## Feature Engineering and Preprocessing
 
 To preprocess the data, we began filtering the dataset to the following relevent columns.
