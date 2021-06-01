@@ -45,7 +45,7 @@ In regards to cleaning our data, we chose to drop invalid inputs for credit scor
    
 In order to attain the labels, we looked at the Monthly Performance dataset and defined a loan-taker as default at 90 days or more delinquent. In addition to delinquency status, we used their Zero Balance Code. If this code was listed as "03", "06", or "09", the loan was also be considered a default.
    
-# ML Model
+## ML Model
    
 We used a simple Logistic Regression model in order to determine the likelihood of default. After running the model with our labels described in the Feature Engineering and Preprocessing section, we got this output: 
    
