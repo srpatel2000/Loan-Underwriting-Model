@@ -22,7 +22,7 @@ This project was created for the SP'21 Iteration of DSC-102: Scalable Analytic a
 
 ## Feature Engineering and Preprocessing
 
-To preprocess the data, we began filtering the dataset to the following relevent columns.
+To preprocess the data, we began filtering the Origination dataset to the following relevent columns.
 * Credit Score
 * Metropolitan Statistical Area
 * Number of Units
@@ -37,4 +37,8 @@ To preprocess the data, we began filtering the dataset to the following relevent
 * Super Conforming Flag
 * Harp Indicator
 
-We choose the above relevent column based on ["7 Factors That Affect a Loan Application"]](https://loans.usnews.com/articles/beyond-credit-scores-factors-that-affect-a-loan-application)
+We choose the above relevent column based on ["7 Factors That Affect a Loan Application"](https://loans.usnews.com/articles/beyond-credit-scores-factors-that-affect-a-loan-application) as well as advice from loan-takers. 
+   
+## Label Preparation
+   
+In order to attain the labels, we looked at the Monthly Performance dataset and defined a loan-taker as default at 90 days or more delinquent. In addition to delinquency status, we used their Zero Balance Code. If this code was listed as "03", "06", or "09", the loan was also be considered a default.
