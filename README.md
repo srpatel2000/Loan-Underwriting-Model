@@ -89,9 +89,7 @@ If given more time, we'd try to get a proper accuracy reading by balancing the d
 ## Workflow Diagram
 ![image](https://user-images.githubusercontent.com/49801632/120269714-36ad3480-c25d-11eb-8770-43f2d22edcfa.png)
   
-* Feature Engineering
-   * This file is run 
-* Label Prep
+Feature Engineering and Label Preperation are run on two separate datasets which allows these two modules to be run at the same time (mutually exclusive). However, the model can only be run after both the feature prep and label prep modules as it is dependent on their outputs. 
 
 
 
