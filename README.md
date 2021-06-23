@@ -1,4 +1,4 @@
-# DSC102-PA
+# Scalable Loan Underwriting Model Using AWS 
 
 ____WRITE UP IS WITHIN THIS READ ME FILE____
 
